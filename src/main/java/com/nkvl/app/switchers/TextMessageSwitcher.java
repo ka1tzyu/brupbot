@@ -1,6 +1,7 @@
 package com.nkvl.app.switchers;
 
 import com.nkvl.app.App;
+import com.nkvl.app.database.DBDefaults;
 import com.nkvl.app.database.DBSpecies;
 import com.nkvl.app.keyboards.Buttons;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -18,11 +19,15 @@ public final class TextMessageSwitcher {
         switch (text) {
             // Команды
             case "/start" -> {
-                DBSpecies.createUser(
-                        update.getMessage().getChatId(),
-                        update.getMessage().getFrom().getFirstName(),
-                        update.getMessage().getFrom().getUserName());
-                answer.setText("Добро пожаловать в Brup!");
+                if (DBDefaults.isDocumentExist("user", "_id", update.getMessage().getChatId()))
+                    answer.setText("А я вас знаю!");
+                else {
+                    DBSpecies.createUser(
+                            update.getMessage().getChatId(),
+                            update.getMessage().getFrom().getFirstName() + update.getMessage().getFrom().getLastName(),
+                            update.getMessage().getFrom().getUserName());
+                    answer.setText("Добро пожаловать в Brup!");
+                }
                 Buttons.set(answer, "main");
             }
             case "/so" -> answer.setText("Ну?...");
@@ -53,7 +58,10 @@ public final class TextMessageSwitcher {
                 Buttons.set(answer, "mdback");
             }
             case "Профиль" -> {
-                answer.setText("Профильное сообщение...");
+                answer.setText(String.format(
+                        "Имя: %s",
+                        DBDefaults.getValueOf("user", "username", "nekovalue1", "name")
+                ));
                 Buttons.set(answer, "mdback");
             }
             case "Обычный режим" -> {

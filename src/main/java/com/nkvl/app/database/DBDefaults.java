@@ -1,8 +1,11 @@
 package com.nkvl.app.database;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
+import org.bson.BsonDocument;
 import org.bson.Document;
 
 public final class DBDefaults {

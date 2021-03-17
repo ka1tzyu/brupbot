@@ -1,7 +1,6 @@
 package com.nkvl.app.switchers;
 
 import com.nkvl.app.App;
-import com.nkvl.app.database.DBDefaults;
 import com.nkvl.app.database.DBSpecies;
 import com.nkvl.app.keyboards.Buttons;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -19,12 +18,14 @@ public final class TextMessageSwitcher {
         switch (text) {
             // Команды
             case "/start" -> {
-                if (DBDefaults.isDocumentExist("user", "_id", update.getMessage().getChatId()))
+                if (DBSpecies.isUserExist(update.getMessage().getChatId()))
                     answer.setText("А я вас знаю!");
                 else {
                     DBSpecies.createUser(
                             update.getMessage().getChatId(),
-                            update.getMessage().getFrom().getFirstName() + update.getMessage().getFrom().getLastName(),
+                            update.getMessage().getFrom().getFirstName() + " " +
+                                    (update.getMessage().getFrom().getLastName() == null ?
+                                            "" : update.getMessage().getFrom().getLastName()),
                             update.getMessage().getFrom().getUserName());
                     answer.setText("Добро пожаловать в Brup!");
                 }
@@ -59,8 +60,24 @@ public final class TextMessageSwitcher {
             }
             case "Профиль" -> {
                 answer.setText(String.format(
-                        "Имя: %s",
-                        DBDefaults.getValueOf("user", "username", "nekovalue1", "name")
+                    """
+                    Имя: %s
+                    Ник: @%s
+                    Время: %s
+                    Медали:
+                        Обычный режим: **%s**
+                        Усложнённый режим: **%s**
+                    Рекорды:
+                        Обычный режим: %s
+                        Усложнённый режим: %s    
+                    """,
+                    update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getFrom().getLastName(),
+                    update.getMessage().getFrom().getUserName(),
+                    DBSpecies.getUserValue(update.getMessage().getChatId(), "time"),
+                    DBSpecies.getUserMedValue(update.getMessage().getChatId(), "emed"),
+                    DBSpecies.getUserMedValue(update.getMessage().getChatId(), "hmed"),
+                    DBSpecies.getUserMedValue(update.getMessage().getChatId(), "emx"),
+                    DBSpecies.getUserMedValue(update.getMessage().getChatId(), "hmx")
                 ));
                 Buttons.set(answer, "mdback");
             }

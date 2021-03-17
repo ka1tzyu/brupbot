@@ -7,19 +7,23 @@ public final class DBSpecies {
         Document user = new Document("_id", id)
                 .append("name", name)
                 .append("username", username)
-                .append("time", 0)
-                .append("medals", new Document(
-                        "emx", 0)
-                        .append("emed", "none")
-                        .append("hmx", 0)
-                        .append("hmed", "none"));
+                .append("time", 0);
+        Document user_med = new Document("_id", id)
+                .append("emed", "none")
+                .append("hmed", "none")
+                .append("emx", 0)
+                .append("hmx", 0);
         DBDefaults.createDocument("user", user);
+        DBDefaults.createDocument("user_med", user_med);
     }
     public static boolean isUserExist(long id) {
         return DBDefaults.isDocumentExist("user", "_id", id);
     }
     public static String getUserValue(long id, String key) {
         return DBDefaults.getValueOf("user", "_id", id, key);
+    }
+    public static String getUserMedValue(long id, String key) {
+        return DBDefaults.getValueOf("user_med", "_id", id, key);
     }
     public static void deleteUser(long id) {
         DBDefaults.deleteDocument("user", "_id", id);

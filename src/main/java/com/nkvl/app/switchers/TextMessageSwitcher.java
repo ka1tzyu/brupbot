@@ -1,6 +1,7 @@
 package com.nkvl.app.switchers;
 
 import com.nkvl.app.App;
+import com.nkvl.app.database.DBSpecies;
 import com.nkvl.app.keyboards.Buttons;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -17,6 +18,10 @@ public final class TextMessageSwitcher {
         switch (text) {
             // Команды
             case "/start" -> {
+                DBSpecies.createUser(
+                        update.getMessage().getChatId(),
+                        update.getMessage().getFrom().getFirstName(),
+                        update.getMessage().getFrom().getUserName());
                 answer.setText("Добро пожаловать в Brup!");
                 Buttons.set(answer, "main");
             }

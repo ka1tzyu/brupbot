@@ -15,5 +15,18 @@ public final class DBSpecies {
                         .append("hmed", "none"));
         DBDefaults.createDocument("user", user);
     }
+    public static boolean isUserExist(long id) {
+        return DBDefaults.isDocumentExist("user", "_id", id);
+    }
+    public static String getUserValue(long id, String key) {
+        return DBDefaults.getValueOf("user", "_id", id, key);
+    }
+    public static void deleteUser(long id) {
+        DBDefaults.deleteDocument("user", "_id", id);
+    }
+    public static void updateUser(long id, String key, String value) {
+        DBDefaults.updateDocument("user", "_id", id, key, value);
+    }
+
 
 }

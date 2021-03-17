@@ -7,12 +7,14 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 
 public class App {
+    public static final BrupBot bot = new BrupBot();
+
     public static void main(String[] args) {
         PropertyConfigurator.configure("src\\main\\resources\\log4j.properties");
 
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-            botsApi.registerBot(new BrupBot());
+            botsApi.registerBot(bot);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

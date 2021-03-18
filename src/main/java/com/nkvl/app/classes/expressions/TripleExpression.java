@@ -1,21 +1,23 @@
 package com.nkvl.app.classes.expressions;
 
+import java.util.Arrays;
+import java.util.Random;
+
 import static com.nkvl.app.classes.RandomExtended.nextRangedInt;
 
 public final class TripleExpression {
     private final String text;
     private final int[] allAnswers;
-    private final int rightAnswer;
+    private int rightAnswer;
+    private final static int ACCURACY_RANGE = 5;
 
     public static void main(String[] args) {
-        for (int i = 0; i < 100; i++) {
-            System.out.println(genRawExpression());
-        }
+        System.out.println(new TripleExpression().toString());
     }
 
     public TripleExpression() {
-        text = genRawExpression();
-        rightAnswer = solveExpression();
+        rightAnswer = 0;
+        text = genExpressionWithPositiveResult();
         allAnswers = genAnswers();
     }
 
@@ -23,7 +25,7 @@ public final class TripleExpression {
     public int[] getAnswers() { return allAnswers; }
     public int getRightAnswer() { return rightAnswer; }
 
-    public static String genRawExpression() {
+    private static String genRawExpression() {
         int[] nums = new int[3];
         for (int i = 0; i < nums.length; i++) {
             nums[i] = nextRangedInt(0, 10);
@@ -37,11 +39,18 @@ public final class TripleExpression {
                 nums[0], sym1, nums[1], sym2, nums[2]);
     }
 
-    public static String genExpressionWithPositiveResult() {
-        return "";
+    private String genExpressionWithPositiveResult() {
+        while (true) {
+            String resStr = genRawExpression();
+            double resDouble = evalExpression(resStr);
+            if (resDouble > 0) {
+                rightAnswer = (int) resDouble;
+                return resStr;
+            }
+        }
     }
 
-    public static double eval(final String str) {
+    private static double evalExpression(final String str) {
         return new Object() {
             int pos = -1, ch;
 
@@ -123,7 +132,45 @@ public final class TripleExpression {
         }.parse();
     }
 
-    private int solveExpression() { return 0; }
+    private int[] genAnswers() {
+        int[] result = new int[] { 0, 0, 0 };
+        int rPos = nextRangedInt(-1, 3);
+        result[rPos] = rightAnswer;
 
-    private int[] genAnswers() { return new int[] {0}; }
+        for (int i = 0; i < result.length; i++) {
+            if (result[i] == 0) {
+                while (true) {
+                    int r = genFakeAnswer(rightAnswer);
+                    if (Arrays.stream(result).noneMatch(x -> x == r)) {
+                        result[i] = r;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private int genFakeAnswer(int trueAnswer) {
+        Random r = new Random();
+        if (r.nextBoolean() && r.nextBoolean()) {
+            for (int i = 1; i < ACCURACY_RANGE; i++) {
+                if (r.nextBoolean() && r.nextBoolean() && (trueAnswer - i) > 0) {
+                    return trueAnswer - i;
+                }
+            }
+        } else {
+            for (int i = 1; i < ACCURACY_RANGE; i++) {
+                if (r.nextBoolean() && r.nextBoolean() && (trueAnswer + i) > 0) {
+                    return trueAnswer + i;
+                }
+            }
+        }
+        return trueAnswer + 1;
+    }
+
+    public String toString() {
+        return String.format("%s = %d (%s)", text, rightAnswer, Arrays.toString(allAnswers));
+    }
 }

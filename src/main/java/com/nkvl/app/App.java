@@ -5,6 +5,9 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
+/**
+ * TODO: expressions, logs, docs, stats
+ * */
 
 public class App {
     public static final BrupBot bot = new BrupBot();

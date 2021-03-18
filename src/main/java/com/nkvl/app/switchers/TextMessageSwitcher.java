@@ -32,6 +32,7 @@ public final class TextMessageSwitcher {
                 Buttons.set(answer, "main");
             }
             case "/so" -> answer.setText("Ну?...");
+            case "/st" -> answer.setText(DBSpecies.getStatByDate(1, "2021-03-18"));
             // Меню
             case "Испытания" -> {
                 answer.setText(String.format("Открытие [[%s]]", text));

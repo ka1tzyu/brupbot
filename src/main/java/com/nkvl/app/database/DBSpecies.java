@@ -25,6 +25,9 @@ public final class DBSpecies {
     public static String getUserMedValue(long id, String key) {
         return DBDefaults.getValueOf("user_med", "_id", id, key);
     }
+    public static String getStatByDate(long id, String key) {
+        return DBDefaults.getValueOf("user_stat", "_id", id, key);
+    }
     public static void deleteUser(long id) {
         DBDefaults.deleteDocument("user", "_id", id);
     }

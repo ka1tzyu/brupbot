@@ -1,12 +1,17 @@
 package com.nkvl.app.classes.expressions;
 
-import static com.nkvl.app.classes.RandomExtended.getRandomStringElement;
 import static com.nkvl.app.classes.RandomExtended.nextRangedInt;
 
 public final class TripleExpression {
     private final String text;
     private final int[] allAnswers;
     private final int rightAnswer;
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 100; i++) {
+            System.out.println(genRawExpression());
+        }
+    }
 
     public TripleExpression() {
         text = genRawExpression();
@@ -23,9 +28,13 @@ public final class TripleExpression {
         for (int i = 0; i < nums.length; i++) {
             nums[i] = nextRangedInt(0, 10);
         }
+
         String[] symbols = new String[] { "+", "-" };
+
+        String sym1 = symbols[nextRangedInt(-1, 2)];
+        String sym2 = sym1.equals("+") ? "-" : "+";
         return String.format("%d %s %d %s %d",
-                nums[0], getRandomStringElement(symbols), nums[1], getRandomStringElement(symbols), nums[2]);
+                nums[0], sym1, nums[1], sym2, nums[2]);
     }
 
     public static String genExpressionWithPositiveResult() {

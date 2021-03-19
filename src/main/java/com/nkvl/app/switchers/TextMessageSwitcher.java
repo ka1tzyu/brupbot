@@ -1,6 +1,7 @@
 package com.nkvl.app.switchers;
 
 import com.nkvl.app.App;
+import com.nkvl.app.classes.Wasted;
 import com.nkvl.app.database.DBSpecies;
 import com.nkvl.app.keyboards.Buttons;
 import com.nkvl.app.keyboards.Inline;
@@ -78,11 +79,11 @@ public final class TextMessageSwitcher {
                                 """,
                         update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getFrom().getLastName(),
                         update.getMessage().getFrom().getUserName(),
-                        DBSpecies.getUserValue(update.getMessage().getChatId(), "time"),
+                        Wasted.transferFromSeconds(Integer.parseInt(DBSpecies.getUserValue(update.getMessage().getChatId(), "time"))),
                         DBSpecies.getUserMedValue(update.getMessage().getChatId(), "emed"),
                         DBSpecies.getUserMedValue(update.getMessage().getChatId(), "hmed"),
-                        DBSpecies.getUserMedValue(update.getMessage().getChatId(), "emx"),
-                        DBSpecies.getUserMedValue(update.getMessage().getChatId(), "hmx")
+                        Wasted.transferFromSeconds(Integer.parseInt(DBSpecies.getUserMedValue(update.getMessage().getChatId(), "emx"))),
+                        Wasted.transferFromSeconds(Integer.parseInt(DBSpecies.getUserMedValue(update.getMessage().getChatId(), "hmx")))
                 ));
                 Buttons.set(answer, "mdback");
             }

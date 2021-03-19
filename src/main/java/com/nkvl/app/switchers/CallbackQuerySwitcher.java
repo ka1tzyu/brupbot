@@ -4,6 +4,7 @@ import com.nkvl.app.App;
 import com.nkvl.app.bot.BotMethods;
 import com.nkvl.app.classes.Wasted;
 import com.nkvl.app.classes.expressions.TripleExpression;
+import com.nkvl.app.database.DBSpecies;
 import com.nkvl.app.keyboards.Inline;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -56,8 +57,24 @@ public final class CallbackQuerySwitcher {
                                 + TripleExpression.getExpressionDefaultQuantity() + "/" + errors;
 
                         resultStr += "\nВремя - " + Wasted.transferFromSeconds(resultSeconds);
-                        if (errors > 0)
+                        if (errors > 0) {
                             resultStr += "\n(Этот результат не будет засчитан, так как у вас были ошибки)";
+                        } else {
+                            int cur = Integer.parseInt(DBSpecies.getUserMedValue(tmpId, "emx"));
+                            if (cur < resultSeconds)
+                                DBSpecies.updateUserMed(tmpId, "emx", resultSeconds + "");
+                                if (resultSeconds >= 120) {
+                                    DBSpecies.updateUserMed(tmpId, "emed", "бронза");
+                                } else if (resultSeconds >= 90) {
+                                    DBSpecies.updateUserMed(tmpId, "emed", "серебро");
+                                } else if (resultSeconds <= 60) {
+                                    DBSpecies.updateUserMed(tmpId, "emed", "золото");
+                                }
+                        }
+
+                        DBSpecies.updateUser(tmpId, "time",
+                                (Integer.parseInt(DBSpecies.getUserValue(tmpId, "time"))
+                                        + resultSeconds) + "");
 
                         SendMessage message2 = BotMethods.makeMessage(tmpId, resultStr);
                         App.bot.execute(message2);

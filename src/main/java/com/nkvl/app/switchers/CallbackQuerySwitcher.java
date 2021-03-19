@@ -28,10 +28,6 @@ public final class CallbackQuerySwitcher {
 
         switch (data) {
             case "start_e" -> {
-
-                message.setText("Подготовка примеров...");
-                App.bot.execute(message);
-
                 App.store.genExpressionSession(tmpId);
 
                 TripleExpression te = App.store.expTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
@@ -46,8 +42,6 @@ public final class CallbackQuerySwitcher {
                         App.store.resTable.get(tmpId).newResult(result);
 
                         App.store.resTable.get(tmpId).setEnd(System.nanoTime());
-                        message.setText("Вы закончили испытание!\nПодождите немного, ваш результат обрабатывается...");
-                        App.bot.execute(message);
 
                         String resultStr = "Результаты:";
                         int errors = TripleExpression.checkErrorsOfStorageVaultAndResTable(

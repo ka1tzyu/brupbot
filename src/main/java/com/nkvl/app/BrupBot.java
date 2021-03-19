@@ -11,12 +11,12 @@ public class BrupBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         try {
-            // Text message case
-            if (update.getMessage().hasText()) {
-                TextMessageSwitcher.send(update);
             // CallbackQuery case
-            } else if (update.hasCallbackQuery()) {
+            if (update.hasCallbackQuery()) {
                 CallbackQuerySwitcher.send(update);
+            // Text message case
+            } else if (update.getMessage().hasText()) {
+                TextMessageSwitcher.send(update);
             }
         } catch (TelegramApiException e) {
             e.printStackTrace();

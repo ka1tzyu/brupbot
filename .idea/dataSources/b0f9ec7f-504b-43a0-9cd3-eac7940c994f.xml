@@ -10,5 +10,39 @@
     <schema id="5" parent="1" name="hsbdb"/>
     <schema id="6" parent="1" name="local"/>
     <table id="7" parent="3" name="user"/>
+    <table id="8" parent="3" name="user_med"/>
+    <table id="9" parent="3" name="user_stat"/>
+    <column id="10" parent="7" name="_id">
+      <DataType>Long(0)|12s</DataType>
+    </column>
+    <column id="11" parent="7" name="name">
+      <DataType>String(0)|12s</DataType>
+    </column>
+    <column id="12" parent="7" name="time">
+      <Position>1</Position>
+      <DataType>Integer|4s</DataType>
+    </column>
+    <column id="13" parent="7" name="username">
+      <Position>2</Position>
+      <DataType>String(0)|12s</DataType>
+    </column>
+    <column id="14" parent="8" name="_id">
+      <DataType>Long(0)|12s</DataType>
+    </column>
+    <column id="15" parent="8" name="emed">
+      <DataType>String(0)|12s</DataType>
+    </column>
+    <column id="16" parent="8" name="emx">
+      <Position>1</Position>
+      <DataType>Integer|4s</DataType>
+    </column>
+    <column id="17" parent="8" name="hmed">
+      <Position>2</Position>
+      <DataType>String(0)|12s</DataType>
+    </column>
+    <column id="18" parent="8" name="hmx">
+      <Position>3</Position>
+      <DataType>Integer|4s</DataType>
+    </column>
   </database-model>
 </dataSource>

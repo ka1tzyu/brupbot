@@ -3,9 +3,13 @@ package com.nkvl.app.switchers;
 import com.nkvl.app.App;
 import com.nkvl.app.database.DBSpecies;
 import com.nkvl.app.keyboards.Buttons;
+import com.nkvl.app.keyboards.Inline;
+import org.apache.log4j.Level;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import static com.nkvl.app.App.logger;
 
 public final class TextMessageSwitcher {
     public static void send(Update update) throws TelegramApiException {
@@ -61,37 +65,39 @@ public final class TextMessageSwitcher {
             }
             case "Профиль" -> {
                 answer.setText(String.format(
-                    """
-                    Имя: %s
-                    Ник: @%s
-                    Время: %s
-                    Медали:
-                        Обычный режим: **%s**
-                        Усложнённый режим: **%s**
-                    Рекорды:
-                        Обычный режим: %s
-                        Усложнённый режим: %s    
-                    """,
-                    update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getFrom().getLastName(),
-                    update.getMessage().getFrom().getUserName(),
-                    DBSpecies.getUserValue(update.getMessage().getChatId(), "time"),
-                    DBSpecies.getUserMedValue(update.getMessage().getChatId(), "emed"),
-                    DBSpecies.getUserMedValue(update.getMessage().getChatId(), "hmed"),
-                    DBSpecies.getUserMedValue(update.getMessage().getChatId(), "emx"),
-                    DBSpecies.getUserMedValue(update.getMessage().getChatId(), "hmx")
+                        """
+                                Имя: %s
+                                Ник: @%s
+                                Время: %s
+                                Медали:
+                                    Обычный режим: **%s**
+                                    Усложнённый режим: **%s**
+                                Рекорды:
+                                    Обычный режим: %s
+                                    Усложнённый режим: %s    
+                                """,
+                        update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getFrom().getLastName(),
+                        update.getMessage().getFrom().getUserName(),
+                        DBSpecies.getUserValue(update.getMessage().getChatId(), "time"),
+                        DBSpecies.getUserMedValue(update.getMessage().getChatId(), "emed"),
+                        DBSpecies.getUserMedValue(update.getMessage().getChatId(), "hmed"),
+                        DBSpecies.getUserMedValue(update.getMessage().getChatId(), "emx"),
+                        DBSpecies.getUserMedValue(update.getMessage().getChatId(), "hmx")
                 ));
                 Buttons.set(answer, "mdback");
             }
             case "Обычный режим" -> {
-                answer.setText("Обычный режим...");
-                Buttons.set(answer, "chback");
+                answer.setText("Вы готовы начать игру?");
+                logger.log(Level.INFO, "Easy mode entered!");
+                answer.setReplyMarkup(Inline.get("start_e"));
             }
             case "Усложнённый режим" -> {
                 answer.setText("Усложнённый режим...");
                 Buttons.set(answer, "chback");
             }
         }
-
         App.bot.execute(answer);
     }
 }
+
+

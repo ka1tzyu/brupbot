@@ -1,6 +1,9 @@
 package com.nkvl.app.classes.expressions;
 
+import com.nkvl.app.classes.Storage;
+
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import static com.nkvl.app.classes.RandomExtended.nextRangedInt;
@@ -10,6 +13,7 @@ public final class TripleExpression {
     private final int[] allAnswers;
     private int rightAnswer;
     private final static int ACCURACY_RANGE = 5;
+    private final static int EXPRESSION_DEFAULT_QUANTITY = 10;
 
     public static void main(String[] args) {
         System.out.println(new TripleExpression().toString());
@@ -24,6 +28,7 @@ public final class TripleExpression {
     public String getText() { return text; }
     public int[] getAnswers() { return allAnswers; }
     public int getRightAnswer() { return rightAnswer; }
+    public static int getExpressionDefaultQuantity() { return EXPRESSION_DEFAULT_QUANTITY; }
 
     private static String genRawExpression() {
         int[] nums = new int[3];
@@ -168,6 +173,15 @@ public final class TripleExpression {
             }
         }
         return trueAnswer + 1;
+    }
+
+    public static int checkErrorsOfStorageVaultAndResTable(TripleExpression[] tArray, List<Integer> resTableContent) {
+        int cnt = 0;
+        for (int i = 0; i < tArray.length; i++) {
+            if (tArray[i].getRightAnswer() != resTableContent.get(i))
+                cnt++;
+        }
+        return cnt;
     }
 
     public String toString() {

@@ -1,6 +1,5 @@
 package com.nkvl.app.classes.expressions;
 
-import com.nkvl.app.classes.Storage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +12,7 @@ public final class TripleExpression {
     private final int[] allAnswers;
     private int rightAnswer;
     private final static int ACCURACY_RANGE = 5;
-    private final static int EXPRESSION_DEFAULT_QUANTITY = 10;
+    private final static int EXPRESSION_DEFAULT_QUANTITY = 40;
 
     public static void main(String[] args) {
         System.out.println(new TripleExpression().toString());

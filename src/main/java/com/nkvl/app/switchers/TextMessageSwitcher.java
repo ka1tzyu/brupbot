@@ -67,16 +67,16 @@ public final class TextMessageSwitcher {
             case "Профиль" -> {
                 answer.setText(String.format(
                         """
-                                Имя: %s
-                                Ник: @%s
-                                Время: %s
-                                Медали:
-                                    Обычный режим: **%s**
-                                    Усложнённый режим: **%s**
-                                Рекорды:
-                                    Обычный режим: %s
-                                    Усложнённый режим: %s    
-                                """,
+                        Имя: %s
+                        Ник: @%s
+                        Время: %s
+                        Медали:
+                            Обычный режим: **%s**
+                            Усложнённый режим: **%s**
+                        Рекорды:
+                            Обычный режим: %s
+                            Усложнённый режим: %s    
+                        """,
                         update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getFrom().getLastName(),
                         update.getMessage().getFrom().getUserName(),
                         Wasted.transferFromSeconds(Integer.parseInt(DBSpecies.getUserValue(update.getMessage().getChatId(), "time"))),

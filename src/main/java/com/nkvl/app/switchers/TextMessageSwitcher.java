@@ -24,7 +24,7 @@ public final class TextMessageSwitcher {
             // Команды
             case "/start" -> {
                 if (DBSpecies.isUserExist(update.getMessage().getChatId()))
-                    answer.setText("А я вас знаю!");
+                    answer.setText("**Снова здравствуйте!**");
                 else {
                     DBSpecies.createUser(
                             update.getMessage().getChatId(),
@@ -32,12 +32,10 @@ public final class TextMessageSwitcher {
                                     (update.getMessage().getFrom().getLastName() == null ?
                                             "" : update.getMessage().getFrom().getLastName()),
                             update.getMessage().getFrom().getUserName());
-                    answer.setText("Добро пожаловать в Brup!");
+                    answer.setText("**Добро пожаловать в Brup!**\nВаш аккаунт успешно зарегистрирован.");
                 }
                 Buttons.set(answer, "main");
             }
-            case "/so" -> answer.setText("Ну?...");
-            case "/st" -> answer.setText(DBSpecies.getStatByDate(1, "2021-03-18"));
             // Меню
             case "Испытания" -> {
                 answer.setText(String.format("Открытие [[%s]]", text));
@@ -67,15 +65,15 @@ public final class TextMessageSwitcher {
             case "Профиль" -> {
                 answer.setText(String.format(
                         """
-                        Имя: %s
-                        Ник: @%s
-                        Время: %s
-                        Медали:
-                            Обычный режим: **%s**
-                            Усложнённый режим: **%s**
-                        Рекорды:
-                            Обычный режим: %s
-                            Усложнённый режим: %s    
+                        **Имя:** %s
+                        **Ник:** @%s
+                        **Время:** %s
+                        **Медали:**
+                            **Обычный режим:** **%s**
+                            **Усложнённый режим:** **%s**
+                        **Рекорды:**
+                            **Обычный режим:** %s
+                            **Усложнённый режим:** %s    
                         """,
                         update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getFrom().getLastName(),
                         update.getMessage().getFrom().getUserName(),

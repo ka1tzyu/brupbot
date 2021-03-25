@@ -17,7 +17,7 @@ public final class TextMessageSwitcher {
         String text = update.getMessage().getText();
 
         SendMessage answer = new SendMessage();
-        answer.enableMarkdown(true);
+        answer.enableMarkdownV2(true);
         answer.setChatId(update.getMessage().getChatId().toString());
 
         switch (text) {

@@ -16,8 +16,11 @@ public class App {
     public static Boolean isDebug = false;
 
     public static void main(String[] args) {
-        isDebug = args[0].equals("-debug");
-
+        try {
+            isDebug = args[0].equals("-debug");
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            isDebug = false;
+        }
         PropertyConfigurator.configure(PathResolve.getPathTo("log.conf"));
 
         try {

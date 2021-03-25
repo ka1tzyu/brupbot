@@ -22,7 +22,7 @@ public class BrupBot extends TelegramLongPollingBot {
                 TextMessageSwitcher.send(update);
             }
         } catch (TelegramApiException ex) {
-            App.logger.log(Level.ERROR, ex.getMessage());
+            ex.printStackTrace();
         }
 
     }

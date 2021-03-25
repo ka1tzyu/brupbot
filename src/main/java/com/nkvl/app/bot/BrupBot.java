@@ -1,5 +1,6 @@
-package com.nkvl.app;
+package com.nkvl.app.bot;
 
+import com.nkvl.app.classes.ConfigurationReader;
 import com.nkvl.app.switchers.CallbackQuerySwitcher;
 import com.nkvl.app.switchers.TextMessageSwitcher;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -26,11 +27,11 @@ public class BrupBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "1738877744:AAHC2ETK1knQNYE1jNuI9fhxqRhRFRwYMT4";
+        return ConfigurationReader.getPropertyValue("BotToken");
     }
 
     @Override
     public String getBotUsername() {
-        return "brupbot";
+        return ConfigurationReader.getPropertyValue("BotUsername");
     }
 }

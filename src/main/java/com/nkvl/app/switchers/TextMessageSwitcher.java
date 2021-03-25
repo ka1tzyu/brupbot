@@ -24,7 +24,7 @@ public final class TextMessageSwitcher {
             // Команды
             case "/start" -> {
                 if (DBSpecies.isUserExist(update.getMessage().getChatId()))
-                    answer.setText("**Снова здравствуйте!**");
+                    answer.setText("** Снова здравствуйте! **");
                 else {
                     DBSpecies.createUser(
                             update.getMessage().getChatId(),

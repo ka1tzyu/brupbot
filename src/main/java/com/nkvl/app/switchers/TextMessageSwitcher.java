@@ -17,14 +17,14 @@ public final class TextMessageSwitcher {
         String text = update.getMessage().getText();
 
         SendMessage answer = new SendMessage();
-        answer.enableMarkdownV2(true);
+        answer.enableHtml(true);
         answer.setChatId(update.getMessage().getChatId().toString());
 
         switch (text) {
             // Команды
             case "/start" -> {
                 if (DBSpecies.isUserExist(update.getMessage().getChatId()))
-                    answer.setText("** Снова здравствуйте! **");
+                    answer.setText("<i>Снова здравствуйте!</i>");
                 else {
                     DBSpecies.createUser(
                             update.getMessage().getChatId(),
@@ -32,7 +32,7 @@ public final class TextMessageSwitcher {
                                     (update.getMessage().getFrom().getLastName() == null ?
                                             "" : update.getMessage().getFrom().getLastName()),
                             update.getMessage().getFrom().getUserName());
-                    answer.setText("**Добро пожаловать в Brup!**\nВаш аккаунт успешно зарегистрирован.");
+                    answer.setText("<i>Добро пожаловать в Brup!</i>\nВаш аккаунт успешно зарегистрирован.");
                 }
                 Buttons.set(answer, "main");
             }

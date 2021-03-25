@@ -1,6 +1,7 @@
 package com.nkvl.app;
 
 import com.nkvl.app.bot.BrupBot;
+import com.nkvl.app.classes.PathResolve;
 import com.nkvl.app.classes.Storage;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -12,9 +13,12 @@ public class App {
     public static final BrupBot bot = new BrupBot();
     public static final Logger logger = Logger.getLogger("root");
     public static final Storage store = new Storage();
+    public static Boolean isDebug = false;
 
     public static void main(String[] args) {
-        PropertyConfigurator.configure("src/main/resources/log4j.properties");
+        isDebug = args[0].equals("-debug");
+
+        PropertyConfigurator.configure(PathResolve.getPathTo("log.conf"));
 
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);

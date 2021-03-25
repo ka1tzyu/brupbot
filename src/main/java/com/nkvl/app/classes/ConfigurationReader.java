@@ -26,6 +26,6 @@ public class ConfigurationReader {
         return props.getProperty(property);
     }
     public static String getPropertyValue(String property) {
-        return getPropertyValue("src/main/resources/app.config", property);
+        return getPropertyValue(PathResolve.getPathTo("app.conf"), property);
     }
 }

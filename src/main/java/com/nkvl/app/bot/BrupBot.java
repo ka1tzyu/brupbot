@@ -27,7 +27,7 @@ public class BrupBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return ConfigurationReader.getPropertyValue("BotToken");
+        return ConfigurationReader.getPropertyValue("BotToken").replace("__DOUBLE_POINT__", ":");
     }
 
     @Override

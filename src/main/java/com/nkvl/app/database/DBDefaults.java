@@ -45,6 +45,11 @@ public final class DBDefaults {
         MongoCollection<Document> coll = DBConnect.dbClient.getCollection(collection);
         coll.updateOne(Filters.eq(key, value), Updates.set(keyToUpdate, valueToUpdate));
     }
+    public static void updateDocument(String collection, String key, long value,
+                                      String keyToUpdate, int valueToUpdate) {
+        MongoCollection<Document> coll = DBConnect.dbClient.getCollection(collection);
+        coll.updateOne(Filters.eq(key, value), Updates.set(keyToUpdate, valueToUpdate));
+    }
     public static void deleteDocument(String collection, String key, String value) {
         MongoCollection<Document> coll = DBConnect.dbClient.getCollection(collection);
         coll.deleteOne(Filters.eq(key, value));

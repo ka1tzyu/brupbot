@@ -26,6 +26,7 @@ public class Buttons {
                 row1.add(new KeyboardButton("Испытания"));
                 KeyboardRow row2 = new KeyboardRow();
                 row2.add(new KeyboardButton("Мои данные"));
+                row2.add(new KeyboardButton("Помощь"));
 
                 keyboard.add(row1);
                 keyboard.add(row2);

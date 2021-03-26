@@ -46,6 +46,10 @@ public final class TextMessageSwitcher {
                 answer.setText(String.format("Открытие [%s]", text));
                 Buttons.set(answer, "mydata");
             }
+            case "Помощь" -> {
+                answer.setText("Будет добавлено в будущем...");
+                Buttons.set(answer, "mback");
+            }
             case "Назад" -> {
                 answer.setText("Открытие [Главное меню]");
                 Buttons.set(answer, "main");

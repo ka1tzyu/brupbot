@@ -26,8 +26,6 @@ public class ConfigurationReader {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        App.logger.log(Level.INFO, String.format("Property [%s] was read from [%s]",
-                property, fileName));
         return props.getProperty(property);
     }
     public static String getPropertyValue(String property) {

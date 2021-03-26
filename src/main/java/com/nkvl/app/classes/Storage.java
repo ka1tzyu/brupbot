@@ -8,12 +8,10 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 public final class Storage {
-    public Dictionary<Long, String> fsm;
-    public Dictionary<Long, TripleExpression[]> expTable;
-    public Dictionary<Long, ChallResult> resTable;
+    public final Dictionary<Long, TripleExpression[]> expTable;
+    public final Dictionary<Long, ChallResult> resTable;
 
     public Storage() {
-        fsm = new Hashtable<>();
         expTable = new Hashtable<>();
         resTable = new Hashtable<>();
     }

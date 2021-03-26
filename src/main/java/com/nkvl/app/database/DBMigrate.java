@@ -1,6 +1,6 @@
 package com.nkvl.app.database;
 
-public class DBMigrate {
+public final class DBMigrate {
     public static void main(String[] args) {
         DBConnect.dbClient.createCollection("user");
         DBConnect.dbClient.createCollection("user_med");

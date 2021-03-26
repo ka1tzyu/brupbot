@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
-public class App {
+public final class App {
     public static final BrupBot bot = new BrupBot();
     public static final Logger logger = Logger.getLogger("root");
     public static final Storage store = new Storage();
@@ -21,13 +21,14 @@ public class App {
         } catch (ArrayIndexOutOfBoundsException ex) {
             isDebug = false;
         }
+
         PropertyConfigurator.configure(PathResolve.getPathTo("log.conf"));
 
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
+        } catch (TelegramApiException ex) {
+            ex.printStackTrace();
         }
     }
 }

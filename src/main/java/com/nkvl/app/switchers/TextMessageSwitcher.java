@@ -100,7 +100,7 @@ public final class TextMessageSwitcher {
                 answer.setText("<i>Вы готовы начать игру?</i>");
                 logger.log(Level.INFO, String.format("User [%d] is preparing for easy game",
                         update.getMessage().getChatId()));
-                answer.setReplyMarkup(Inline.get("start_e"));
+                answer.setReplyMarkup(Inline.get("start_easy_confirm"));
             }
             case "Усложнённый режим" -> {
                 answer.setText("Усложнённый режим...");

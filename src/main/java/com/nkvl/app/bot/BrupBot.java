@@ -1,6 +1,5 @@
 package com.nkvl.app.bot;
 
-import com.nkvl.app.App;
 import com.nkvl.app.classes.ConfigurationReader;
 import com.nkvl.app.switchers.CallbackQuerySwitcher;
 import com.nkvl.app.switchers.TextMessageSwitcher;

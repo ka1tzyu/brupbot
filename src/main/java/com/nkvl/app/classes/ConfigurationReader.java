@@ -1,15 +1,12 @@
 package com.nkvl.app.classes;
 
-import com.nkvl.app.App;
-import org.apache.log4j.Level;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class ConfigurationReader {
+public final class ConfigurationReader {
     public static void main(String[] args) {
         System.out.println(getPropertyValue("token"));
     }

@@ -9,18 +9,31 @@ import java.util.List;
 public class Inline {
     public static InlineKeyboardMarkup get(String pattern) {
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
-        List<InlineKeyboardButton> brow1 = new ArrayList<>();
-
-        InlineKeyboardButton btn1 = new InlineKeyboardButton();
-        btn1.setText("Начать");
-        btn1.setCallbackData("start_e");
-
-        brow1.add(btn1);
-        buttons.add(brow1);
-
         InlineKeyboardMarkup markupKeyboard = new InlineKeyboardMarkup();
-        markupKeyboard.setKeyboard(buttons);
 
+        switch (pattern) {
+            case "start_easy_confirm" -> {
+                List<InlineKeyboardButton> brow1 = new ArrayList<>();
+
+                InlineKeyboardButton btn1 = new InlineKeyboardButton();
+                btn1.setText("Начать");
+                btn1.setCallbackData("start_e");
+
+                brow1.add(btn1);
+                buttons.add(brow1);
+            }
+            case "start_hard_confirm" -> {
+                List<InlineKeyboardButton> brow1 = new ArrayList<>();
+
+                InlineKeyboardButton btn1 = new InlineKeyboardButton();
+                btn1.setText("Начать");
+                btn1.setCallbackData("start_h");
+
+                brow1.add(btn1);
+                buttons.add(brow1);
+            }
+        }
+        markupKeyboard.setKeyboard(buttons);
         return markupKeyboard;
     }
     public static InlineKeyboardMarkup expGet(int[] expArr) {

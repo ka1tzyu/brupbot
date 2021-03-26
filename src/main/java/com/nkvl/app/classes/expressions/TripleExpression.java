@@ -1,11 +1,12 @@
 package com.nkvl.app.classes.expressions;
 
 
+import com.nkvl.app.classes.Storage;
+
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
-import static com.nkvl.app.classes.RandomExtended.nextRangedInt;
+import static com.nkvl.app.classes.AdvancedRandom.nextRangedInt;
 
 public final class TripleExpression {
     private final String text;
@@ -78,12 +79,6 @@ public final class TripleExpression {
                 return x;
             }
 
-            // Grammar:
-            // expression = term | expression `+` term | expression `-` term
-            // term = factor | term `*` factor | term `/` factor
-            // factor = `+` factor | `-` factor | `(` expression `)`
-            //        | number | functionName factor | factor `^` factor
-
             double parseExpression() {
                 double x = parseTerm();
                 for (;;) {
@@ -114,23 +109,9 @@ public final class TripleExpression {
                 } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
                     while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
                     x = Double.parseDouble(str.substring(startPos, this.pos));
-                } else if (ch >= 'a' && ch <= 'z') { // functions
-                    while (ch >= 'a' && ch <= 'z') nextChar();
-                    String func = str.substring(startPos, this.pos);
-                    x = parseFactor();
-                    x = switch (func) {
-                        case "sqrt" -> Math.sqrt(x);
-                        case "sin" -> Math.sin(Math.toRadians(x));
-                        case "cos" -> Math.cos(Math.toRadians(x));
-                        case "tan" -> Math.tan(Math.toRadians(x));
-                        default -> throw new RuntimeException("Unknown function: " + func);
-                    };
                 } else {
                     throw new RuntimeException("Unexpected: " + (char)ch);
                 }
-
-                if (eat('^')) x = Math.pow(x, parseFactor()); // exponentiation
-
                 return x;
             }
         }.parse();
@@ -174,10 +155,10 @@ public final class TripleExpression {
         return trueAnswer + 1;
     }
 
-    public static int checkErrorsOfStorageVaultAndResTable(TripleExpression[] tArray, List<Integer> resTableContent) {
+    public static int checkErrorsOfStorageVaultAndResTable(long id, Storage store) {
         int cnt = 0;
-        for (int i = 0; i < tArray.length; i++) {
-            if (tArray[i].getRightAnswer() != resTableContent.get(i))
+        for (int i = 0; i < store.expTable.get(id).length; i++) {
+            if (store.expTable.get(id)[i].getRightAnswer() != store.resTable.get(id).getResultsList().get(i))
                 cnt++;
         }
         return cnt;

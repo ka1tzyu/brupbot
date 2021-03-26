@@ -34,15 +34,18 @@ public final class DBSpecies {
     public static void updateUserMed(long id, String key, int value) {
         DBDefaults.updateDocument("user_med", "_id", id, key, value);
     }
+    @Deprecated
     public static String getStatByDate(long id, String key) {
         return DBDefaults.getValueOf("user_stat", "_id", id, key);
     }
     public static void updateStatValue(long id, int value) {
         DBDefaults.updateDocument("user_stat", "_id", id, Wasted.getToday(), value);
     }
+    @Deprecated
     public static void deleteUser(long id) {
         DBDefaults.deleteDocument("user", "_id", id);
     }
+    @Deprecated
     public static void updateUser(long id, String key, String value) {
         DBDefaults.updateDocument("user", "_id", id, key, value);
     }

@@ -4,9 +4,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 public final class BotMethods {
     public static SendMessage makeMessage(long chatId, String text) {
-        SendMessage m = new SendMessage();
-        m.setText(text);
-        m.setChatId(chatId+"");
-        return m;
+        SendMessage message = new SendMessage();
+        message.setText(text);
+        message.setChatId(chatId+"");
+        return message;
     }
 }

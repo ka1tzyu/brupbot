@@ -12,6 +12,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 
 public final class CallbackQuerySwitcher {
@@ -128,7 +129,13 @@ public final class CallbackQuerySwitcher {
                     editedMessage.setText(text);
                     editedMessage.setReplyMarkup(Inline.get("help"));
                     editedMessage.enableHtml(true);
-                    App.bot.execute(editedMessage);
+                    try {
+                        App.bot.execute(editedMessage);
+                    } catch (TelegramApiRequestException ex) {
+                        App.logger.log(Level.WARN, String.format("Message [%d] dublicates new edited text",
+                                update.getCallbackQuery().getMessage().getMessageId()));
+                    }
+
                 }
             }
         }

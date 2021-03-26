@@ -12,7 +12,7 @@ public final class TripleExpression {
     private final int[] allAnswers;
     private int rightAnswer;
     private final static int ACCURACY_RANGE = 5;
-    private final static int EXPRESSION_DEFAULT_QUANTITY = 40;
+    private final static int EXPRESSION_DEFAULT_QUANTITY = 10;
 
     public static void main(String[] args) {
         System.out.println(new TripleExpression().toString());

@@ -31,7 +31,8 @@ public final class TextMessageSwitcher {
                             update.getMessage().getFrom().getFirstName() +
                                     (update.getMessage().getFrom().getLastName() == null ?
                                             "" : " " + update.getMessage().getFrom().getLastName()),
-                            update.getMessage().getFrom().getUserName());
+                            update.getMessage().getFrom().getUserName() == null ? "anon" :
+                                update.getMessage().getFrom().getUserName());
                     answer.setText("<i>Добро пожаловать в Brup!</i>\nВаш аккаунт успешно зарегистрирован.");
                 }
                 Buttons.set(answer, "main");
@@ -75,9 +76,11 @@ public final class TextMessageSwitcher {
                             <i><b>Обычный режим:</b></i> <i>%s</i>
                             <i><b>Усложнённый режим:</b></i> <i>%s</i>    
                         """,
-                        update.getMessage().getFrom().getFirstName() + " "
-                                + update.getMessage().getFrom().getLastName(),
-                        update.getMessage().getFrom().getUserName(),
+                        update.getMessage().getFrom().getFirstName() +
+                                (update.getMessage().getFrom().getLastName() == null ?
+                                        "" : " " + update.getMessage().getFrom().getLastName()),
+                        update.getMessage().getFrom().getUserName() == null ? "anon" :
+                            update.getMessage().getFrom().getUserName(),
                         Wasted.transferFromSeconds(Integer.parseInt(DBSpecies.getUserValue(
                                 update.getMessage().getChatId(), "time"))),
                         DBSpecies.getUserMedValue(update.getMessage().getChatId(), "emed"),

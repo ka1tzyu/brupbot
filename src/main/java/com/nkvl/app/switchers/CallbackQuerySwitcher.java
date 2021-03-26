@@ -31,7 +31,7 @@ public final class CallbackQuerySwitcher {
                 App.store.genExpressionSession(tmpId);
 
                 TripleExpression te = App.store.expTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
-                SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••  " + te.getText() + " =");
+                SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••   " + te.getText() + " =");
                 message2.setReplyMarkup(Inline.expGet(te.getAnswers()));
                 App.bot.execute(message2);
             }
@@ -43,16 +43,16 @@ public final class CallbackQuerySwitcher {
 
                         App.store.resTable.get(tmpId).setEnd(System.nanoTime());
 
-                        String resultStr = "Результаты:";
+                        String resultStr = "<i><b>Результаты испытания:</b></i>";
                         int errors = TripleExpression.checkErrorsOfStorageVaultAndResTable(
                                 App.store.expTable.get(tmpId), App.store.resTable.get(tmpId).getResultsList());
                         int resultSeconds = App.store.resTable.get(tmpId).geTotalTime();
-                        resultStr += "\nКоличество задач/ошибок - "
+                        resultStr += "\n<i>Количество задач/ошибок - </i>"
                                 + TripleExpression.getExpressionDefaultQuantity() + "/" + errors;
 
-                        resultStr += "\nВремя - " + Wasted.transferFromSeconds(resultSeconds);
+                        resultStr += "\n<i>Время - </i>" + Wasted.transferFromSeconds(resultSeconds);
                         if (errors > 0) {
-                            resultStr += "\n(Этот результат не будет засчитан, так как у вас были ошибки)";
+                            resultStr += "\n<i><b>(Этот результат не будет засчитан, так как у вас были ошибки)</b></i>";
                         } else {
                             int cur = Integer.parseInt(DBSpecies.getUserMedValue(tmpId, "emx"));
                             if (cur < resultSeconds)
@@ -64,6 +64,8 @@ public final class CallbackQuerySwitcher {
                                 } else if (resultSeconds <= 60) {
                                     DBSpecies.updateUserMed(tmpId, "emed", "золото");
                                 }
+
+
                         }
 
                         DBSpecies.updateUser(tmpId, "time",
@@ -71,6 +73,8 @@ public final class CallbackQuerySwitcher {
                                         + resultSeconds) + "");
 
                         SendMessage message2 = BotMethods.makeMessage(tmpId, resultStr);
+                        message2.enableHtml(true);
+
                         App.bot.execute(message2);
                         return;
                     }
@@ -78,7 +82,7 @@ public final class CallbackQuerySwitcher {
                     App.store.resTable.get(tmpId).newResult(result);
 
                     TripleExpression te = App.store.expTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
-                    SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••  " + te.getText() + " =");
+                    SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••   " + te.getText() + " =");
                     message2.setReplyMarkup(Inline.expGet(te.getAnswers()));
                     App.bot.execute(message2);
                 }

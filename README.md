@@ -4,7 +4,7 @@
 - ~~TripleExpression class(done)~~
 - ~~Prettify visual and textboxes~~
 - ~~Logging options~~
-- Refactor code
+- ~~Refactor code~~
 - Documentation
 - Help menu
 - Hard mode

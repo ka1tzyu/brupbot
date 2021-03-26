@@ -46,10 +46,6 @@ public final class TextMessageSwitcher {
                 answer.setText(String.format("Открытие [%s]", text));
                 Buttons.set(answer, "mydata");
             }
-            case "Помощь" -> {
-                answer.setText("Будет добавлено в будущем...");
-                Buttons.set(answer, "mback");
-            }
             case "Назад" -> {
                 answer.setText("Открытие [Главное меню]");
                 Buttons.set(answer, "main");
@@ -101,6 +97,10 @@ public final class TextMessageSwitcher {
                 logger.log(Level.INFO, String.format("User [%d] is preparing for easy game",
                         update.getMessage().getChatId()));
                 answer.setReplyMarkup(Inline.get("start_easy_confirm"));
+            }
+            case "Помощь" -> {
+                answer.setText("Выберите вопрос:");
+                answer.setReplyMarkup(Inline.get("help"));
             }
             case "Усложнённый режим" -> {
                 answer.setText("Усложнённый режим...");

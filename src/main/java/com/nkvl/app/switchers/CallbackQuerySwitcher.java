@@ -9,6 +9,7 @@ import com.nkvl.app.keyboards.Inline;
 import org.apache.log4j.Level;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -79,12 +80,14 @@ public final class CallbackQuerySwitcher {
                         } else {
                             int currentRecord = Integer.parseInt(DBSpecies.getUserMedValue(tmpId, "emx"));
                             if (currentRecord < resultSeconds)
-                                if (resultSeconds >= 120) {
-                                    DBSpecies.updateUserMed(tmpId, "emed", "бронза");
-                                } else if (resultSeconds >= 90) {
-                                    DBSpecies.updateUserMed(tmpId, "emed", "серебро");
-                                } else if (resultSeconds <= 60) {
+                                if (resultSeconds <= 60) {
                                     DBSpecies.updateUserMed(tmpId, "emed", "золото");
+                                } else if (resultSeconds <= 90) {
+                                    DBSpecies.updateUserMed(tmpId, "emed", "серебро");
+                                } else if (resultSeconds <= 120) {
+                                    DBSpecies.updateUserMed(tmpId, "emed", "бронза");
+                                } else {
+                                    DBSpecies.updateUserMed(tmpId, "emed", "дерево");
                                 }
                                 DBSpecies.updateUserMed(tmpId, "emx", resultSeconds);
                                 DBSpecies.updateStatValue(tmpId, resultSeconds);
@@ -102,6 +105,30 @@ public final class CallbackQuerySwitcher {
 
                         App.bot.execute(message2);
                     }
+                } else if (data.contains("help:")) {
+                    String text;
+                    switch (data.replace("help:", "")) {
+                        case "how_it_works" -> text = "Этот бот создан по мотивам техники развития мозга Рюты " +
+                                "Кавашимы. Принцип работы " +
+                                "состоит в решении простых примеров на скорость с невероятным желанием " +
+                                "побить предыдущий рекорд";
+                        case "about_medals" -> text = """
+                                Всего есть три медали.
+
+                                1. <b>Золотая</b> <i>(1 мин)</i>: результат, которого достигают люди, хорошо умеющие считать в уме или на счетах. Способности к счету — великолепные.
+                                2. <b>Серебряная</b> <i>(1 мин 30 с)</i>: результат, которого можно достичь, если как следует сконцентрироваться на задаче. В умении считать вы мало кому уступаете. Есть определенный талант к счету.
+                                3. <b>Бронзовая</b> <i>(2 мин)</i>: результат, доступный каждому при должном старании. Уровень способностей к счету — хороший.
+
+                                Деревянная медаль присуждается для всех результатов ниже.""";
+                        default -> text = "";
+                    }
+                    EditMessageText editedMessage = new EditMessageText();
+                    editedMessage.setChatId(update.getCallbackQuery().getMessage().getChatId().toString());
+                    editedMessage.setMessageId(update.getCallbackQuery().getMessage().getMessageId());
+                    editedMessage.setText(text);
+                    editedMessage.setReplyMarkup(Inline.get("help"));
+                    editedMessage.enableHtml(true);
+                    App.bot.execute(editedMessage);
                 }
             }
         }

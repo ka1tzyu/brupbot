@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import static com.nkvl.app.App.logger;
 
 
-public class BrupBot extends TelegramLongPollingBot {
+public final class BrupBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         try {

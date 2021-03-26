@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import java.util.ArrayList;
 import java.util.List;
 
-public class Buttons {
+public final class Buttons {
     public static void set(SendMessage sendMessage, String pattern) {
         Buttons.set(sendMessage, pattern, false);
     }

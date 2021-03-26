@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inline {
+public final class Inline {
     public static InlineKeyboardMarkup get(String pattern) {
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         InlineKeyboardMarkup markupKeyboard = new InlineKeyboardMarkup();
@@ -31,6 +31,24 @@ public class Inline {
 
                 brow1.add(btn1);
                 buttons.add(brow1);
+            }
+            case "help" -> {
+                List<InlineKeyboardButton> brow1 = new ArrayList<>();
+                List<InlineKeyboardButton> brow2 = new ArrayList<>();
+
+                InlineKeyboardButton btn1 = new InlineKeyboardButton();
+                btn1.setText("Как работает бот");
+                btn1.setCallbackData("help:how_it_works");
+
+                InlineKeyboardButton btn2 = new InlineKeyboardButton();
+                btn2.setText("О медалях");
+                btn2.setCallbackData("help:about_medals");
+
+                brow1.add(btn1);
+                brow2.add(btn2);
+
+                buttons.add(brow1);
+                buttons.add(brow2);
             }
         }
         markupKeyboard.setKeyboard(buttons);

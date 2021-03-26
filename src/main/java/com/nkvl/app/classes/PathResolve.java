@@ -2,7 +2,7 @@ package com.nkvl.app.classes;
 
 import com.nkvl.app.App;
 
-public class PathResolve {
+public final class PathResolve {
     public static String getPathTo(String pattern) {
         switch (pattern) {
             case "log.conf" -> {

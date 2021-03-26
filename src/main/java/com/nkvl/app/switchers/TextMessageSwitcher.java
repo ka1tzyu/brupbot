@@ -28,9 +28,9 @@ public final class TextMessageSwitcher {
                 else {
                     DBSpecies.createUser(
                             update.getMessage().getChatId(),
-                            update.getMessage().getFrom().getFirstName() + " " +
+                            update.getMessage().getFrom().getFirstName() +
                                     (update.getMessage().getFrom().getLastName() == null ?
-                                            "" : update.getMessage().getFrom().getLastName()),
+                                            "" : " " + update.getMessage().getFrom().getLastName()),
                             update.getMessage().getFrom().getUserName());
                     answer.setText("<i>Добро пожаловать в Brup!</i>\nВаш аккаунт успешно зарегистрирован.");
                 }
@@ -38,23 +38,23 @@ public final class TextMessageSwitcher {
             }
             // Меню
             case "Испытания" -> {
-                answer.setText(String.format("Открытие [[%s]]", text));
+                answer.setText(String.format("Открытие [%s]", text));
                 Buttons.set(answer, "chall");
             }
             case "Мои данные" -> {
-                answer.setText(String.format("Открытие [[%s]]", text));
+                answer.setText(String.format("Открытие [%s]", text));
                 Buttons.set(answer, "mydata");
             }
             case "Назад" -> {
-                answer.setText("Открытие [[Главное меню]]");
+                answer.setText("Открытие [Главное меню]");
                 Buttons.set(answer, "main");
             }
             case "Назад в [Мои данные]" -> {
-                answer.setText("Открытие [[Мои данные]]");
+                answer.setText("Открытие [Мои данные]");
                 Buttons.set(answer, "mydata");
             }
             case "Назад в [Испытания]" -> {
-                answer.setText("Открытие [[Испытания]]");
+                answer.setText("Открытие [Испытания]");
                 Buttons.set(answer, "chall");
             }
             // Другие сообщения
@@ -65,29 +65,34 @@ public final class TextMessageSwitcher {
             case "Профиль" -> {
                 answer.setText(String.format(
                         """
-                        **Имя:** %s
-                        **Ник:** @%s
-                        **Время:** %s
-                        **Медали:**
-                            **Обычный режим:** **%s**
-                            **Усложнённый режим:** **%s**
-                        **Рекорды:**
-                            **Обычный режим:** %s
-                            **Усложнённый режим:** %s    
+                        <i><b>Имя:</b></i> <i>%s</i>
+                        <i><b>Ник:</b></i> <i>@%s</i>
+                        <i><b>Время:</b></i> <i>%s</i>
+                        <i><b>Медали:</b></i>
+                            <i><b>Обычный режим:</b></i> <i>%s</i>
+                            <i><b>Усложнённый режим:</b></i> <i>%s</i>
+                        <i><b>Рекорды:</b></i>
+                            <i><b>Обычный режим:</b></i> <i>%s</i>
+                            <i><b>Усложнённый режим:</b></i> <i>%s</i>    
                         """,
-                        update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getFrom().getLastName(),
+                        update.getMessage().getFrom().getFirstName() + " "
+                                + update.getMessage().getFrom().getLastName(),
                         update.getMessage().getFrom().getUserName(),
-                        Wasted.transferFromSeconds(Integer.parseInt(DBSpecies.getUserValue(update.getMessage().getChatId(), "time"))),
+                        Wasted.transferFromSeconds(Integer.parseInt(DBSpecies.getUserValue(
+                                update.getMessage().getChatId(), "time"))),
                         DBSpecies.getUserMedValue(update.getMessage().getChatId(), "emed"),
                         DBSpecies.getUserMedValue(update.getMessage().getChatId(), "hmed"),
-                        Wasted.transferFromSeconds(Integer.parseInt(DBSpecies.getUserMedValue(update.getMessage().getChatId(), "emx"))),
-                        Wasted.transferFromSeconds(Integer.parseInt(DBSpecies.getUserMedValue(update.getMessage().getChatId(), "hmx")))
+                        Wasted.transferFromSeconds(Integer.parseInt(DBSpecies.getUserMedValue(
+                                update.getMessage().getChatId(), "emx"))),
+                        Wasted.transferFromSeconds(Integer.parseInt(DBSpecies.getUserMedValue(
+                                update.getMessage().getChatId(), "hmx")))
                 ));
                 Buttons.set(answer, "mdback");
             }
             case "Обычный режим" -> {
-                answer.setText("Вы готовы начать игру?");
-                logger.log(Level.INFO, "Easy mode entered!");
+                answer.setText("<i>Вы готовы начать игру?</i>");
+                logger.log(Level.INFO, String.format("User [%d] prepared for easy game",
+                        update.getMessage().getChatId()));
                 answer.setReplyMarkup(Inline.get("start_e"));
             }
             case "Усложнённый режим" -> {

@@ -9,8 +9,8 @@ public final class DBSpecies {
                 .append("username", username)
                 .append("time", 0);
         Document user_med = new Document("_id", id)
-                .append("emed", "none")
-                .append("hmed", "none")
+                .append("emed", "нету")
+                .append("hmed", "нету")
                 .append("emx", 0)
                 .append("hmx", 0);
         DBDefaults.createDocument("user", user);

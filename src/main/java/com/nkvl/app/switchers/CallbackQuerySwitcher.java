@@ -31,7 +31,7 @@ public final class CallbackQuerySwitcher {
                 App.store.genExpressionSession(tmpId);
 
                 TripleExpression te = App.store.expTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
-                SendMessage message2 = BotMethods.makeMessage(tmpId, ">>>>>>>  " + te.getText() + " =");
+                SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••  " + te.getText() + " =");
                 message2.setReplyMarkup(Inline.expGet(te.getAnswers()));
                 App.bot.execute(message2);
             }
@@ -78,7 +78,7 @@ public final class CallbackQuerySwitcher {
                     App.store.resTable.get(tmpId).newResult(result);
 
                     TripleExpression te = App.store.expTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
-                    SendMessage message2 = BotMethods.makeMessage(tmpId, ">>>>>>>  " + te.getText() + " =");
+                    SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••  " + te.getText() + " =");
                     message2.setReplyMarkup(Inline.expGet(te.getAnswers()));
                     App.bot.execute(message2);
                 }

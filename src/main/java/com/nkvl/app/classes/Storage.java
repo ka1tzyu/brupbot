@@ -1,6 +1,8 @@
 package com.nkvl.app.classes;
 
+import com.nkvl.app.App;
 import com.nkvl.app.classes.expressions.TripleExpression;
+import org.apache.log4j.Level;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -25,5 +27,7 @@ public final class Storage {
         expTable.put(id, tmp);
         ChallResult tmp1 = new ChallResult(System.nanoTime());
         resTable.put(id, tmp1);
+
+        App.logger.log(Level.INFO, String.format("New expression session was created for [%d]", id));
     }
 }

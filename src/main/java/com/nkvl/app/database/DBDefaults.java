@@ -12,6 +12,7 @@ public final class DBDefaults {
     public static void createDocument(String collection, Document doc) {
         MongoCollection<Document> coll = DBConnect.dbClient.getCollection(collection);
         coll.insertOne(doc);
+
     }
     public static Document getDocument(String collection, String key, String value) {
         MongoCollection<Document> coll = DBConnect.dbClient.getCollection(collection);

@@ -1,5 +1,8 @@
 package com.nkvl.app.classes;
 
+import com.nkvl.app.App;
+import org.apache.log4j.Level;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,6 +26,8 @@ public class ConfigurationReader {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        App.logger.log(Level.INFO, String.format("Property [%s] was read from [%s]",
+                property, fileName));
         return props.getProperty(property);
     }
     public static String getPropertyValue(String property) {

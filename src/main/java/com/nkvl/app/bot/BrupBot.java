@@ -9,6 +9,8 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import static com.nkvl.app.App.logger;
+
 
 public class BrupBot extends TelegramLongPollingBot {
     @Override
@@ -16,9 +18,15 @@ public class BrupBot extends TelegramLongPollingBot {
         try {
             // CallbackQuery case
             if (update.hasCallbackQuery()) {
+                logger.log(Level.INFO, String.format("User [%d] sent callback data [\"%s\"]",
+                        update.getCallbackQuery().getFrom().getId(),
+                        update.getCallbackQuery().getData()));
                 CallbackQuerySwitcher.send(update);
             // Text message case
             } else if (update.hasMessage() && update.getMessage().hasText()) {
+                logger.log(Level.INFO, String.format("User [%d] sent message [\"%s\"]",
+                        update.getMessage().getChatId(),
+                        update.getMessage().getText()));
                 TextMessageSwitcher.send(update);
             }
         } catch (TelegramApiException ex) {

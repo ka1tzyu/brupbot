@@ -98,7 +98,7 @@ public final class TextMessageSwitcher {
             }
             case "Обычный режим" -> {
                 answer.setText("<i>Вы готовы начать игру?</i>");
-                logger.log(Level.INFO, String.format("User [%d] prepared for easy game",
+                logger.log(Level.INFO, String.format("User [%d] is preparing for easy game",
                         update.getMessage().getChatId()));
                 answer.setReplyMarkup(Inline.get("start_e"));
             }

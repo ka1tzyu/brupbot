@@ -3,6 +3,7 @@ package com.nkvl.app;
 import com.nkvl.app.bot.BrupBot;
 import com.nkvl.app.classes.PathResolve;
 import com.nkvl.app.classes.Storage;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -28,7 +29,7 @@ public final class App {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);
         } catch (TelegramApiException ex) {
-            ex.printStackTrace();
+            logger.log(Level.ERROR, ex.getMessage());
         }
     }
 }

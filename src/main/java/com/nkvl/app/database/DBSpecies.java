@@ -35,11 +35,21 @@ public final class DBSpecies {
         DBDefaults.updateDocument("user_med", "_id", id, key, value);
     }
     @Deprecated
-    public static String getStatByDate(long id, String key) {
-        return DBDefaults.getValueOf("user_stat", "_id", id, key);
+    public static String getStatByDate(long id, String key, String mode) {
+        if (mode.equals("easy")) {
+            return DBDefaults.getValueOf("user_stat", "_id", id, key + "--e");
+        } else {
+            return DBDefaults.getValueOf("user_stat", "_id", id, key + "--h");
+        }
+
     }
-    public static void updateStatValue(long id, int value) {
-        DBDefaults.updateDocument("user_stat", "_id", id, Wasted.getToday(), value);
+    public static void updateStatValue(long id, int value, String mode) {
+        if (mode.equals("easy")) {
+            DBDefaults.updateDocument("user_stat", "_id", id, Wasted.getToday() + "--e", value);
+        } else {
+            DBDefaults.updateDocument("user_stat", "_id", id, Wasted.getToday() + "--h", value);
+        }
+
     }
     @Deprecated
     public static void deleteUser(long id) {

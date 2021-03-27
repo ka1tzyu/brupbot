@@ -91,7 +91,7 @@ public final class CallbackQuerySwitcher {
                                     DBSpecies.updateUserMed(tmpId, "emed", "дерево");
                                 }
                                 DBSpecies.updateUserMed(tmpId, "emx", resultSeconds);
-                                DBSpecies.updateStatValue(tmpId, resultSeconds);
+                                DBSpecies.updateStatValue(tmpId, resultSeconds, "easy");
                         }
 
                         App.logger.log(Level.INFO, String.format(

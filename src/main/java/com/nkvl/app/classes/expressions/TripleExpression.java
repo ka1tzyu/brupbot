@@ -3,16 +3,14 @@ package com.nkvl.app.classes.expressions;
 
 import com.nkvl.app.classes.Storage;
 
-import java.util.Arrays;
-import java.util.Random;
-
 import static com.nkvl.app.classes.AdvancedRandom.nextRangedInt;
 
 public final class TripleExpression extends Expression {
     static {
         ACCURACY_RANGE = 5;
-        EXPRESSION_DEFAULT_QUANTITY = 40;
     }
+    private final static int EXPRESSION_DEFAULT_QUANTITY = 40;
+
 
     public static void main(String[] args) {
         System.out.println(new TripleExpression().toString());
@@ -57,4 +55,6 @@ public final class TripleExpression extends Expression {
         }
         return cnt;
     }
+
+    public static int getExpressionDefaultQuantity() { return EXPRESSION_DEFAULT_QUANTITY; }
 }

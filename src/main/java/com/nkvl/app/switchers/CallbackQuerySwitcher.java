@@ -4,6 +4,7 @@ import com.nkvl.app.App;
 import com.nkvl.app.bot.BotMethods;
 import com.nkvl.app.classes.Wasted;
 import com.nkvl.app.classes.expressions.TripleExpression;
+import com.nkvl.app.classes.expressions.UnitExpression;
 import com.nkvl.app.database.DBSpecies;
 import com.nkvl.app.keyboards.Inline;
 import org.apache.log4j.Level;
@@ -40,7 +41,18 @@ public final class CallbackQuerySwitcher {
                 App.bot.execute(message2);
             }
             case "start_h" -> {
-                SendMessage message2 = BotMethods.makeMessage(tmpId, "В ближайшем будущем...");
+                App.store.genUnitExpressionSession(tmpId);
+
+                SendMessage tableMessage = BotMethods.makeMessage(tmpId,
+                        UnitExpression.unitSymbolsPrettyTable(App.store.unitSymbolsTable.get(tmpId)));
+
+                App.bot.execute(tableMessage);
+
+                UnitExpression unitExpressionInstance =
+                        App.store.unitExpTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
+                SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••   "
+                        + unitExpressionInstance.toSymvolic(App.store.unitSymbolsTable.get(tmpId)) + " = ");
+                message2.setReplyMarkup(Inline.unitExpGet(unitExpressionInstance.getAnswers()));
                 App.bot.execute(message2);
             }
             default -> {
@@ -54,7 +66,7 @@ public final class CallbackQuerySwitcher {
                                 App.store.tripleExpTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
                         SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••   "
                                 + tripleExpressionInstance.getText() + " =");
-                        message2.setReplyMarkup(Inline.tripleExpGet(tripleExpressionInstance.getAnswers()));
+                        message2.setReplyMarkup(Inline.unitExpGet(tripleExpressionInstance.getAnswers()));
                         App.bot.execute(message2);
                     } else {
                         int result = Integer.parseInt(data.replace("!e", ""));
@@ -63,7 +75,7 @@ public final class CallbackQuerySwitcher {
                         App.store.resTable.get(tmpId).setEnd(System.nanoTime());
 
                         int errors = TripleExpression.checkErrorsOfStorageVaultAndResTable(tmpId, App.store);
-                        int resultSeconds = App.store.resTable.get(tmpId).geTotalTime();
+                        int resultSeconds = App.store.resTable.get(tmpId).getTotalTime();
 
                         String resultString = String.format(
                                 """
@@ -97,6 +109,68 @@ public final class CallbackQuerySwitcher {
                         App.logger.log(Level.INFO, String.format(
                                 "User [%d] was finished easy game with results(t/a/e) %d/%d/%d",
                                 tmpId, resultSeconds, TripleExpression.getExpressionDefaultQuantity(), errors));
+
+                        DBSpecies.updateUser(tmpId, "time",
+                                (Integer.parseInt(DBSpecies.getUserValue(tmpId, "time")) + resultSeconds));
+
+                        SendMessage message2 = BotMethods.makeMessage(tmpId, resultString);
+                        message2.enableHtml(true);
+
+                        App.bot.execute(message2);
+                    }
+                } else if (data.contains("!h")) {
+                    if (!(App.store.resTable.get(tmpId).getExpPos() ==
+                            UnitExpression.getExpressionDefaultQuantity() - 1)) {
+                        int result = Integer.parseInt(data.replace("!h", ""));
+                        App.store.resTable.get(tmpId).newResult(result);
+
+                        UnitExpression unitExpressionInstance =
+                                App.store.unitExpTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
+                        SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••   "
+                                + unitExpressionInstance.toSymvolic(App.store.unitSymbolsTable.get(tmpId)) + " =");
+                        message2.setReplyMarkup(Inline.unitExpGet(unitExpressionInstance.getAnswers()));
+                        App.bot.execute(message2);
+                    } else {
+                        int result = Integer.parseInt(data.replace("!h", ""));
+                        App.store.resTable.get(tmpId).newResult(result);
+
+                        App.store.resTable.get(tmpId).setEnd(System.nanoTime());
+
+                        int errors = UnitExpression.checkErrorsOfStorageVaultAndResTable(tmpId, App.store);
+                        int resultSeconds = App.store.resTable.get(tmpId).getTotalTime();
+
+                        String resultString = String.format(
+                                """
+                                <i><b>Результаты испытания:</b></i>
+                                Количество задач/ошибок - %s
+                                Время - %s
+                                
+                                """,
+                                UnitExpression.getExpressionDefaultQuantity() + "/" + errors,
+                                Wasted.transferFromSeconds(resultSeconds));
+
+                        if (errors > 0) {
+                            resultString += "\n<i><b>(Этот результат не будет засчитан, " +
+                                    "так как у вас были ошибки)</b></i>";
+                        } else {
+                            int currentRecord = Integer.parseInt(DBSpecies.getUserMedValue(tmpId, "hmx"));
+                            if (currentRecord < resultSeconds)
+                                if (resultSeconds <= 60) {
+                                    DBSpecies.updateUserMed(tmpId, "hmed", "золото");
+                                } else if (resultSeconds <= 90) {
+                                    DBSpecies.updateUserMed(tmpId, "hmed", "серебро");
+                                } else if (resultSeconds <= 120) {
+                                    DBSpecies.updateUserMed(tmpId, "hmed", "бронза");
+                                } else {
+                                    DBSpecies.updateUserMed(tmpId, "hmed", "дерево");
+                                }
+                            DBSpecies.updateUserMed(tmpId, "hmx", resultSeconds);
+                            DBSpecies.updateStatValue(tmpId, resultSeconds, "hard");
+                        }
+
+                        App.logger.log(Level.INFO, String.format(
+                                "User [%d] was finished hard game with results(t/a/e) %d/%d/%d",
+                                tmpId, resultSeconds, UnitExpression.getExpressionDefaultQuantity(), errors));
 
                         DBSpecies.updateUser(tmpId, "time",
                                 (Integer.parseInt(DBSpecies.getUserValue(tmpId, "time")) + resultSeconds));

@@ -2,7 +2,7 @@ package com.nkvl.app.switchers;
 
 import com.nkvl.app.App;
 import com.nkvl.app.classes.Wasted;
-import com.nkvl.app.classes.expressions.UnitExression;
+import com.nkvl.app.classes.expressions.UnitExpression;
 import com.nkvl.app.database.DBSpecies;
 import com.nkvl.app.keyboards.Buttons;
 import com.nkvl.app.keyboards.Inline;
@@ -38,7 +38,7 @@ public final class TextMessageSwitcher {
                 }
                 Buttons.set(answer, "main");
             }
-            case "/send_symbols" -> answer.setText(UnitExression.getSymbols());
+            case "/send_symbols" -> answer.setText(UnitExpression.getSymbols());
             // Меню
             case "Испытания" -> {
                 answer.setText(String.format("Открытие [%s]", text));
@@ -105,8 +105,11 @@ public final class TextMessageSwitcher {
                 answer.setReplyMarkup(Inline.get("help"));
             }
             case "Усложнённый режим" -> {
-                answer.setText("Усложнённый режим...");
-                Buttons.set(answer, "chback");
+                answer.setText("<i>Вы готовы начать игру?\nПосле подтверждения вам будет показана символьная таблица, " +
+                        "старайтесь не смотреть на неё во время игры.</i>");
+                logger.log(Level.INFO, String.format("User [%d] is preparing for hard game",
+                        update.getMessage().getChatId()));
+                answer.setReplyMarkup(Inline.get("start_hard_confirm"));
             }
         }
         App.bot.execute(answer);

@@ -54,21 +54,21 @@ public final class Inline {
         markupKeyboard.setKeyboard(buttons);
         return markupKeyboard;
     }
-    public static InlineKeyboardMarkup tripleExpGet(int[] expArr) {
+    public static InlineKeyboardMarkup expGet(int[] expArr, String specialKey) {
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         List<InlineKeyboardButton> brow1 = new ArrayList<>();
 
         InlineKeyboardButton btn1 = new InlineKeyboardButton();
         btn1.setText(expArr[0] + "");
-        btn1.setCallbackData("!e" + expArr[0]);
+        btn1.setCallbackData(specialKey + expArr[0]);
 
         InlineKeyboardButton btn2 = new InlineKeyboardButton();
         btn2.setText(expArr[1] + "");
-        btn2.setCallbackData("!e" + expArr[1]);
+        btn2.setCallbackData(specialKey + expArr[1]);
 
         InlineKeyboardButton btn3 = new InlineKeyboardButton();
         btn3.setText(expArr[2] + "");
-        btn3.setCallbackData("!e" + expArr[2]);
+        btn3.setCallbackData(specialKey + expArr[2]);
 
         brow1.add(btn1);
         brow1.add(btn2);
@@ -79,5 +79,13 @@ public final class Inline {
         markupKeyboard.setKeyboard(buttons);
 
         return markupKeyboard;
+    }
+
+    public static InlineKeyboardMarkup tripleExpGet(int[] expArr) {
+        return expGet(expArr, "!e");
+    }
+
+    public static InlineKeyboardMarkup unitExpGet(int[] expArr) {
+        return expGet(expArr, "!h");
     }
 }

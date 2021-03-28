@@ -22,7 +22,7 @@ public final class ChallResult {
         this.end = end;
     }
 
-    public int geTotalTime() {
+    public int getTotalTime() {
         return ((int) ((end - start) / 1000000000));
     }
 

@@ -5,17 +5,16 @@ import java.util.Random;
 
 import static com.nkvl.app.classes.AdvancedRandom.nextRangedInt;
 
-public class Expression {
+@SuppressWarnings("CanBeFinal")
+public abstract class Expression {
     protected String text;
     protected int[] allAnswers;
     protected int rightAnswer;
     protected static int ACCURACY_RANGE;
-    protected static int EXPRESSION_DEFAULT_QUANTITY;
 
     public String getText() { return text; }
     public int[] getAnswers() { return allAnswers; }
     public int getRightAnswer() { return rightAnswer; }
-    public static int getExpressionDefaultQuantity() { return EXPRESSION_DEFAULT_QUANTITY; }
 
     protected static double evalExpression(final String str) {
         return new Object() {

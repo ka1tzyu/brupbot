@@ -12,7 +12,6 @@ public final class AdvancedRandom {
         }
     }
 
-    @Deprecated
     public static String getRandomStringElement(String[] array) {
         int r = new Random().nextInt(array.length);
         return array[r];

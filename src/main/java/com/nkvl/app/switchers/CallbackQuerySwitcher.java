@@ -30,13 +30,13 @@ public final class CallbackQuerySwitcher {
 
         switch (data) {
             case "start_e" -> {
-                App.store.genExpressionSession(tmpId);
+                App.store.genTripleExpressionSession(tmpId);
 
                 TripleExpression tripleExpressionInstance =
-                        App.store.expTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
+                        App.store.tripleExpTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
                 SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••   "
                         + tripleExpressionInstance.getText() + " =");
-                message2.setReplyMarkup(Inline.expGet(tripleExpressionInstance.getAnswers()));
+                message2.setReplyMarkup(Inline.tripleExpGet(tripleExpressionInstance.getAnswers()));
                 App.bot.execute(message2);
             }
             case "start_h" -> {
@@ -51,10 +51,10 @@ public final class CallbackQuerySwitcher {
                         App.store.resTable.get(tmpId).newResult(result);
 
                         TripleExpression tripleExpressionInstance =
-                                App.store.expTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
+                                App.store.tripleExpTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
                         SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••   "
                                 + tripleExpressionInstance.getText() + " =");
-                        message2.setReplyMarkup(Inline.expGet(tripleExpressionInstance.getAnswers()));
+                        message2.setReplyMarkup(Inline.tripleExpGet(tripleExpressionInstance.getAnswers()));
                         App.bot.execute(message2);
                     } else {
                         int result = Integer.parseInt(data.replace("!e", ""));

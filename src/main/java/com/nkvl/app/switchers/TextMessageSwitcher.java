@@ -2,6 +2,7 @@ package com.nkvl.app.switchers;
 
 import com.nkvl.app.App;
 import com.nkvl.app.classes.Wasted;
+import com.nkvl.app.classes.expressions.UnitExression;
 import com.nkvl.app.database.DBSpecies;
 import com.nkvl.app.keyboards.Buttons;
 import com.nkvl.app.keyboards.Inline;
@@ -37,6 +38,7 @@ public final class TextMessageSwitcher {
                 }
                 Buttons.set(answer, "main");
             }
+            case "/send_symbols" -> answer.setText(UnitExression.getSymbols());
             // Меню
             case "Испытания" -> {
                 answer.setText(String.format("Открытие [%s]", text));

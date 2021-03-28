@@ -54,7 +54,7 @@ public final class Inline {
         markupKeyboard.setKeyboard(buttons);
         return markupKeyboard;
     }
-    public static InlineKeyboardMarkup expGet(int[] expArr) {
+    public static InlineKeyboardMarkup tripleExpGet(int[] expArr) {
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         List<InlineKeyboardButton> brow1 = new ArrayList<>();
 

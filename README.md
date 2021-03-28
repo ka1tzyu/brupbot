@@ -5,7 +5,8 @@
 - ~~Prettify visual and textboxes~~
 - ~~Logging options~~
 - ~~Refactor code~~
-- Documentation
 - ~~Help menu~~
-- Hard mode
+- ~~Hard mode~~
+- Global code refactor
+- Documentation
 - Statistics

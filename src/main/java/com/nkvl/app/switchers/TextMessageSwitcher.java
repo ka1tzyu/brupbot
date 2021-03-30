@@ -62,8 +62,8 @@ public final class TextMessageSwitcher {
             }
             // Другие сообщения
             case "Статистика" -> {
-                answer.setText("Статистическое сообщение...");
-                Buttons.set(answer, "mdback");
+                answer.setText("Выберите один из вариантов:");
+                answer.setReplyMarkup(Inline.get("stat"));
             }
             case "Профиль" -> {
                 answer.setText(String.format(

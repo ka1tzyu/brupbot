@@ -55,6 +55,18 @@ public final class CallbackQuerySwitcher {
                 message2.setReplyMarkup(Inline.unitExpGet(unitExpressionInstance.getAnswers()));
                 App.bot.execute(message2);
             }
+            case "stat:last30" -> {
+                SendMessage message2 = BotMethods.makeMessage(tmpId, "Последние 30 результатов");
+                App.bot.execute(message2);
+            }
+            case "stat:last100" -> {
+                SendMessage message2 = BotMethods.makeMessage(tmpId, "Последние 100 результатов");
+                App.bot.execute(message2);
+            }
+            case "stat:all" -> {
+                SendMessage message2 = BotMethods.makeMessage(tmpId, "Все результаты");
+                App.bot.execute(message2);
+            }
             default -> {
                 if (data.contains("!e")) {
                     if (!(App.store.resTable.get(tmpId).getExpPos() ==
@@ -66,7 +78,7 @@ public final class CallbackQuerySwitcher {
                                 App.store.tripleExpTable.get(tmpId)[App.store.resTable.get(tmpId).getExpPos()];
                         SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••   "
                                 + tripleExpressionInstance.getText() + " =");
-                        message2.setReplyMarkup(Inline.unitExpGet(tripleExpressionInstance.getAnswers()));
+                        message2.setReplyMarkup(Inline.tripleExpGet(tripleExpressionInstance.getAnswers()));
                         App.bot.execute(message2);
                     } else {
                         int result = Integer.parseInt(data.replace("!e", ""));

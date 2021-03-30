@@ -50,6 +50,31 @@ public final class Inline {
                 buttons.add(brow1);
                 buttons.add(brow2);
             }
+            case "stat" -> {
+                List<InlineKeyboardButton> brow1 = new ArrayList<>();
+                List<InlineKeyboardButton> brow2 = new ArrayList<>();
+                List<InlineKeyboardButton> brow3 = new ArrayList<>();
+
+                InlineKeyboardButton btn1 = new InlineKeyboardButton();
+                btn1.setText("Последние 30 результатов");
+                btn1.setCallbackData("stat:last30");
+
+                InlineKeyboardButton btn2 = new InlineKeyboardButton();
+                btn2.setText("Последние 100 результатов");
+                btn2.setCallbackData("stat:last100");
+
+                InlineKeyboardButton btn3 = new InlineKeyboardButton();
+                btn3.setText("Все результаты (до 200)");
+                btn3.setCallbackData("stat:all");
+
+                brow1.add(btn1);
+                brow2.add(btn2);
+                brow3.add(btn3);
+
+                buttons.add(brow1);
+                buttons.add(brow2);
+                buttons.add(brow3);
+            }
         }
         markupKeyboard.setKeyboard(buttons);
         return markupKeyboard;

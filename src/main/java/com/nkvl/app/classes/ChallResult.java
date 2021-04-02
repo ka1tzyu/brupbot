@@ -7,7 +7,7 @@ public final class ChallResult {
     private final long start;
     private long end;
     private int expPos;
-    private final List<Integer> resultsList;
+    private final ArrayList<Integer> resultsList;
 
     public ChallResult(long start) {
         this.start = start;
@@ -31,5 +31,5 @@ public final class ChallResult {
         this.resultsList.add(n);
     }
 
-    public List<Integer> getResultsList() { return resultsList; }
+    public ArrayList<Integer> getResultsList() { return resultsList; }
 }

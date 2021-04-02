@@ -37,9 +37,6 @@ public final class Storage {
     public void genUnitExpressionSession(long id) {
         UnitExpression[] tmp = new UnitExpression[UnitExpression.getExpressionDefaultQuantity()];
 
-        App.logger.log(Level.INFO, String.format("LOCAL %s", tmp.length));
-        App.logger.log(Level.INFO, String.format("LOCAL %s", UnitExpression.getExpressionDefaultQuantity()));
-
         for (int i = 0; i < tmp.length; i++) {
             tmp[i] = new UnitExpression();
         }

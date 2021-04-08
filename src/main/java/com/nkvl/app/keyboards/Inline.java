@@ -53,27 +53,47 @@ public final class Inline {
             case "stat" -> {
                 List<InlineKeyboardButton> brow1 = new ArrayList<>();
                 List<InlineKeyboardButton> brow2 = new ArrayList<>();
-                List<InlineKeyboardButton> brow3 = new ArrayList<>();
 
                 InlineKeyboardButton btn1 = new InlineKeyboardButton();
-                btn1.setText("Последние 30 результатов");
-                btn1.setCallbackData("stat:last30");
+                btn1.setText("Обычный режим");
+                btn1.setCallbackData("stat/e");
 
                 InlineKeyboardButton btn2 = new InlineKeyboardButton();
-                btn2.setText("Последние 100 результатов");
-                btn2.setCallbackData("stat:last100");
-
-                InlineKeyboardButton btn3 = new InlineKeyboardButton();
-                btn3.setText("Все результаты (до 200)");
-                btn3.setCallbackData("stat:all");
+                btn2.setText("Усложненный режим");
+                btn2.setCallbackData("stat/h");
 
                 brow1.add(btn1);
                 brow2.add(btn2);
-                brow3.add(btn3);
 
                 buttons.add(brow1);
                 buttons.add(brow2);
-                buttons.add(brow3);
+            }
+            default -> {
+                if (pattern.contains("stat/")) {
+                    List<InlineKeyboardButton> brow1 = new ArrayList<>();
+                    List<InlineKeyboardButton> brow2 = new ArrayList<>();
+                    List<InlineKeyboardButton> brow3 = new ArrayList<>();
+
+                    InlineKeyboardButton btn1 = new InlineKeyboardButton();
+                    btn1.setText("Последние 30 результатов");
+                    btn1.setCallbackData(pattern+":last30");
+
+                    InlineKeyboardButton btn2 = new InlineKeyboardButton();
+                    btn2.setText("Последние 100 результатов");
+                    btn2.setCallbackData(pattern+":last100");
+
+                    InlineKeyboardButton btn3 = new InlineKeyboardButton();
+                    btn3.setText("Все результаты (до 200)");
+                    btn3.setCallbackData(pattern+":all");
+
+                    brow1.add(btn1);
+                    brow2.add(btn2);
+                    brow3.add(btn3);
+
+                    buttons.add(brow1);
+                    buttons.add(brow2);
+                    buttons.add(brow3);
+                }
             }
         }
         markupKeyboard.setKeyboard(buttons);

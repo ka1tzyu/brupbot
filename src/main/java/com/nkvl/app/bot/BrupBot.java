@@ -8,6 +8,8 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.IOException;
+
 import static com.nkvl.app.App.logger;
 
 
@@ -28,7 +30,7 @@ public final class BrupBot extends TelegramLongPollingBot {
                         update.getMessage().getText()));
                 TextMessageSwitcher.send(update);
             }
-        } catch (TelegramApiException ex) {
+        } catch (TelegramApiException | IOException ex) {
             ex.printStackTrace();
         }
 

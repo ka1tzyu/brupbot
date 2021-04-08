@@ -1,6 +1,7 @@
 package com.nkvl.app.switchers;
 
 import com.nkvl.app.App;
+import com.nkvl.app.classes.Chart;
 import com.nkvl.app.classes.Wasted;
 import com.nkvl.app.classes.expressions.UnitExpression;
 import com.nkvl.app.database.DBSpecies;
@@ -11,10 +12,12 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.IOException;
+
 import static com.nkvl.app.App.logger;
 
 public final class TextMessageSwitcher {
-    public static void send(Update update) throws TelegramApiException {
+    public static void send(Update update) throws TelegramApiException, IOException {
         String text = update.getMessage().getText();
 
         SendMessage answer = new SendMessage();
@@ -37,6 +40,9 @@ public final class TextMessageSwitcher {
                     answer.setText("<i>Добро пожаловать в Brup!</i>\nВаш аккаунт успешно зарегистрирован.");
                 }
                 Buttons.set(answer, "main");
+            }
+            case "/test" -> {
+                answer.setText("Tested to logger.");
             }
             case "/send_symbols" -> answer.setText(UnitExpression.getSymbols());
             // Меню

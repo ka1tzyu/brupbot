@@ -1,7 +1,11 @@
 package com.nkvl.app.database;
 
+import com.nkvl.app.App;
 import com.nkvl.app.classes.Wasted;
+import org.apache.log4j.Level;
 import org.bson.Document;
+
+import java.util.*;
 
 public final class DBSpecies {
     public static void createUser(long id, String name, String username) {
@@ -62,6 +66,23 @@ public final class DBSpecies {
     public static void updateUser(long id, String key, int value) {
         DBDefaults.updateDocument("user", "_id", id, key, value);
     }
+    public static Dictionary<String, Integer> getUserStatValues(long id, String mode, int range) {
+        Document doc = DBDefaults.getDocument("user_stat", "_id", id);
+        List<Object> keys = new LinkedList<>(Arrays.asList(doc.keySet().toArray()));
 
+        keys.removeIf(obj -> !obj.toString().contains(mode.equals("easy") ? "--e" : "--h"));
+
+        while (keys.size() > range) {
+            keys.remove(0);
+        }
+
+        Dictionary<String, Integer> results = new Hashtable<>();
+
+        for (Object obj : keys) {
+            results.put(obj.toString(), doc.getInteger(obj));
+        }
+
+        return results;
+    }
 
 }

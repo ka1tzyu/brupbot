@@ -2,6 +2,7 @@ package com.nkvl.app.switchers;
 
 import com.nkvl.app.App;
 import com.nkvl.app.bot.BotMethods;
+import com.nkvl.app.classes.Chart;
 import com.nkvl.app.classes.Wasted;
 import com.nkvl.app.classes.expressions.TripleExpression;
 import com.nkvl.app.classes.expressions.UnitExpression;
@@ -10,14 +11,20 @@ import com.nkvl.app.keyboards.Inline;
 import org.apache.log4j.Level;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 
 public final class CallbackQuerySwitcher {
-    public static void send(Update update) throws TelegramApiException {
+    public static void send(Update update) throws TelegramApiException, IOException {
         String data = update.getCallbackQuery().getData();
         long tmpId = update.getCallbackQuery().getFrom().getId();
 
@@ -53,18 +60,6 @@ public final class CallbackQuerySwitcher {
                 SendMessage message2 = BotMethods.makeMessage(tmpId, "•••••••   "
                         + unitExpressionInstance.toSymvolic(App.store.unitSymbolsTable.get(tmpId)) + " = ");
                 message2.setReplyMarkup(Inline.unitExpGet(unitExpressionInstance.getAnswers()));
-                App.bot.execute(message2);
-            }
-            case "stat:last30" -> {
-                SendMessage message2 = BotMethods.makeMessage(tmpId, "Последние 30 результатов");
-                App.bot.execute(message2);
-            }
-            case "stat:last100" -> {
-                SendMessage message2 = BotMethods.makeMessage(tmpId, "Последние 100 результатов");
-                App.bot.execute(message2);
-            }
-            case "stat:all" -> {
-                SendMessage message2 = BotMethods.makeMessage(tmpId, "Все результаты");
                 App.bot.execute(message2);
             }
             default -> {
@@ -222,6 +217,43 @@ public final class CallbackQuerySwitcher {
                                 update.getCallbackQuery().getMessage().getMessageId()));
                     }
 
+                } else if (data.contains("stat/")){
+                    if (!data.contains(":")) {
+                        EditMessageText editedMessage = new EditMessageText();
+                        editedMessage.setChatId(update.getCallbackQuery().getMessage().getChatId().toString());
+                        editedMessage.setMessageId(update.getCallbackQuery().getMessage().getMessageId());
+                        editedMessage.setText("Выберите период:");
+                        editedMessage.setReplyMarkup(Inline.get(data));
+                        editedMessage.enableHtml(true);
+                        try {
+                            App.bot.execute(editedMessage);
+                        } catch (TelegramApiRequestException ex) {
+                            App.logger.log(Level.WARN, String.format("Message [%d] dublicates new edited text",
+                                    update.getCallbackQuery().getMessage().getMessageId()));
+                        }
+                    } else {
+                        int range;
+                        if (data.contains("last")) {
+                            String[] tmp = data.split(":last");
+                            range = Integer.parseInt(tmp[tmp.length - 1]);
+                        } else {
+                            range = 200;
+                        }
+
+                        String filePath = Long.toString(tmpId)+".jpeg";
+
+                        Chart.createChallResultChart(tmpId, (data.contains("/e") ? "easy" : "hard"), range);
+                        SendPhoto chartMessage = new SendPhoto();
+                        chartMessage.setChatId(tmpId+"");
+                        chartMessage.setPhoto(new InputFile(new File(filePath)));
+
+                        App.bot.execute(chartMessage);
+
+                        File f = new File(filePath);
+                        if (f.delete()) {
+                            App.logger.log(Level.INFO, String.format("File [%s] was deleted", filePath));
+                        }
+                    }
                 }
             }
         }

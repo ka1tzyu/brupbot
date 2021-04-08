@@ -9,5 +9,5 @@
 - ~~Hard mode(done)~~
 - ~~Global code refactor(done)~~
 - ~~Documentation~~
-- Statistics
+- ~~Statistics~~
 - Rating
